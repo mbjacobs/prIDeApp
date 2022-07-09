@@ -1,52 +1,55 @@
-import React from 'react';
-import { ImageBackground, StyleSheet, Text, View, Image } from 'react-native';
-import { Container, Content, Footer, Button } from 'native-base';
-import { Entypo } from '@expo/vector-icons';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { ImageBackground, StyleSheet, Text, View } from 'react-native'
+import { Container, Content, Button } from 'native-base'
+// import { TouchableOpacity } from 'react-native-gesture-handler'
 // import { getDataModel } from './DataModel';
 
-class Card extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      index: this.props.index,
-      frontSide: this.props.name,
-      backSide: this.props.definition,
-      isFlipped: false
-    }
-  }
-  componentDidUpdate () {
-    if (this.props.index !== this.state.index) {
-      this.setState({
-        index: this.props.index,
-        frontSide: this.props.name,
-        backSide: this.props.definition,
-      });
-    }
-  }
-   flipCard = () => {
-    let temp = this.state.frontSide;
-    this.setState({
-      index: this.props.index,
-      frontSide: this.state.backSide,
-      backSide: temp,
-      isFlipped: !this.state.isFlipped
-    })
-  }
-  render() {
-    return (
-      <TouchableOpacity style={styles.card} onPress={this.flipCard}>
-        <Text style={styles.cardText}>{this.state.frontSide}</Text>
-      </TouchableOpacity>
-    );
-  }
-}
+// class Card extends React.Component {
+//   constructor (props) {
+//     super(props)
+//     this.state = {
+//       index: this.props.index,
+//       frontSide: this.props.name,
+//       backSide: this.props.definition,
+//       isFlipped: false
+//     }
+//   }
 
-function FlagsScreen () {
+//   componentDidUpdate () {
+//     if (this.props.index !== this.state.index) {
+//       this.setState({
+//         index: this.props.index,
+//         frontSide: this.props.name,
+//         backSide: this.props.definition
+//       })
+//     }
+//   }
+
+//   flipCard = () => {
+//     const temp = this.state.frontSide
+//     this.setState({
+//       index: this.props.index,
+//       frontSide: this.state.backSide,
+//       backSide: temp,
+//       isFlipped: !this.state.isFlipped
+//     })
+//   }
+
+//   render () {
+//     return (
+//       <TouchableOpacity style={styles.card} onPress={this.flipCard}>
+//         <Text style={styles.cardText}>{this.state.frontSide}</Text>
+//       </TouchableOpacity>
+//     )
+//   }
+// }
+
+function FlagsScreen ({ navigation }) {
   // constructor(props) {
   //   super(props);
   //   // this.dataModel = getDataModel();
-  //   // this.currentUser = this.props.route.params.currentUser;    
+  //   // this.currentUser = this.props.route.params.currentUser;
   //   // let allDarkPatterns = this.dataModel.getDarkPatterns();
 
   //   this.state = {
@@ -88,16 +91,20 @@ function FlagsScreen () {
   //   })
   // }
 
-    return (
-      <View>
+  return (
+      <Container>
         <ImageBackground source={require('../assets/images/app-background.png')} style={styles.image}>
-        <View>
+        <Content>
           <View>
-            <Text style={styles.screenTitle}>Dark Pattern Dictionary</Text>
+          <Text>Flags Screen</Text>
+          <Button
+            title="Go home"
+            onPress={() => navigation.goBack()}
+          />
             {/* <View style={[styles.cardCounter, styles.button]}><Text style={styles.buttonText}>FLAG: </Text></View> */}
-            {/* <Card 
+            {/* <Card
               index={this.state.cardIndex}
-              name={this.state.darkPatterns[this.state.cardIndex].name} 
+              name={this.state.darkPatterns[this.state.cardIndex].name}
               definition={this.state.darkPatterns[this.state.cardIndex].description}>
             </Card>
             <View style={styles.navigation}>
@@ -108,77 +115,82 @@ function FlagsScreen () {
               <Entypo name="arrow-bold-right" size={36} color="white" onPress={this.advanceDeck}/>
             </View> */}
         </View>
-      </View>
+      </Content>
       </ImageBackground>
-    </View>
-    );
+    </Container>
+  )
+}
+
+FlagsScreen.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired
+  }).isRequired
+}
+
+export default FlagsScreen
+
+const styles = StyleSheet.create({
+  footer: {
+    display: 'flex',
+    backgroundColor: 'black',
+    opacity: 0.5,
+    justifyContent: 'space-evenly',
+    alignItems: 'center'
+  },
+  image: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center'
+  },
+  screenTitle: {
+    fontSize: 24,
+    alignSelf: 'center',
+    marginTop: 20,
+    marginBottom: 30,
+    color: 'white',
+    opacity: 0.7
+  },
+  button: {
+    backgroundColor: '#7151AB',
+    padding: 5,
+    borderRadius: 10
+  },
+  buttonText: {
+    color: 'white'
+  },
+  cardCounter: {
+    alignSelf: 'flex-end',
+    marginRight: 15
+  },
+  card: {
+    display: 'flex',
+    padding: '10%',
+    marginTop: '5%',
+    marginLeft: '5%',
+    marginRight: '5%',
+    height: 275,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#A4B3B6',
+    borderRadius: 5
+  },
+  cardText: {
+    alignSelf: 'center',
+    fontSize: 20
+  },
+  navigation: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: '5%',
+    marginLeft: '5%',
+    marginRight: '5%'
+  },
+  shuffle: {
+    alignContent: 'center',
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 30,
+    paddingRight: 30
   }
-
-  export default FlagsScreen;
-
-  const styles = StyleSheet.create({
-    footer: {
-      display: 'flex',
-      backgroundColor: 'black',
-      opacity: 0.5,
-      justifyContent: 'space-evenly',
-      alignItems: 'center'
-    },
-    image: {
-      flex: 1,
-      resizeMode: "cover",
-      justifyContent:"center"
-    },
-    screenTitle: {
-      fontSize: 24,
-      alignSelf: 'center',
-      marginTop: 20,
-      marginBottom: 30,
-      color: 'white',
-      opacity: 0.7
-    },
-    button: {
-      backgroundColor: '#7151AB',
-      padding: 5,
-      borderRadius: 10,
-    },
-    buttonText: {
-      color: 'white'
-    },
-    cardCounter: {
-      alignSelf: 'flex-end',
-      marginRight: 15,
-    },
-    card: {
-      display: 'flex',
-      padding: '10%',
-      marginTop: '5%',
-      marginLeft: '5%',
-      marginRight: '5%',
-      height: 275,
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: '#A4B3B6',
-      borderRadius: 5
-    },
-    cardText: {
-      alignSelf: 'center',
-      fontSize: 20
-    },
-    navigation: {
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      marginTop: '5%',
-      marginLeft: '5%',
-      marginRight: '5%'
-    },
-    shuffle: {
-      alignContent: 'center',
-      paddingTop: 10,
-      paddingBottom: 10,
-      paddingLeft: 30,
-      paddingRight: 30,
-    },
-  });
-
+})
